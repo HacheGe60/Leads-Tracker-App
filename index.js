@@ -9,31 +9,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-console.log(firebaseConfig.databaseURL);
-
-let myLeads = [];
 const inputEl = document.querySelector("#input-el");
 const inputBtn = document.querySelector("#input-btn");
 const ulEl = document.querySelector("#ul-el");
-const tabBtn = document.querySelector("#tab-btn");
 const deleteBtn = document.querySelector("#delete-btn");
-const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
-
-if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage;
-    render(myLeads);
-}
-
-tabBtn.addEventListener("click", function () {
-    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-
-    // });
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        myLeads.push(tabs[0].url);
-        localStorage.setItem("myLeads", JSON.stringify(myLeads));
-        render(myLeads);
-    });
-});
 
 function render(leads) {
     let listItems = "";
@@ -48,15 +27,10 @@ function render(leads) {
 }
 
 deleteBtn.addEventListener("dblclick", function () {
-    localStorage.clear();
-    myLeads = [];
-    render(myLeads);
 });
 
 inputBtn.addEventListener("click", function () {
-    myLeads.push(inputEl.value);
+    console.log(inputEl.value);
     inputEl.value = "";
-    localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    render(myLeads);
 });
 
